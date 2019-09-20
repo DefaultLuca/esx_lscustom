@@ -317,6 +317,18 @@ function GetAction(data)
 						_label = 'Turbo - <span style="color:green;">$' .. math.floor(vehiclePrice * v.price[1] / 100) .. ' </span>'
 					end
 					table.insert(elements, {label = _label, modType = k, modNum = true})
+				elseif v.modType == 48 then -- Livery
+					local _label = ''
+					local modCount = tonumber(GetNumVehicleMods(vehicle, 48) or 0) + tonumber(GetVehicleLiveryCount(vehicle) or 0)
+					for j = 1, modCount, 1 do
+						if j == currentMods[k] then
+							_label = _U('stickers') .. ' ' .. j .. ' - <span style="color:cornflowerblue;">'.. _U('installed') ..'</span>'
+						else
+							price = math.floor(vehiclePrice * v.price / 100)
+							_label = _U('stickers') .. ' ' .. j .. ' - <span style="color:green;">$' .. price .. ' </span>'
+						end
+						table.insert(elements, {label = _label, modType = k, modNum = j})
+					end
 				else
 					local modCount = GetNumVehicleMods(vehicle, v.modType) -- BODYPARTS
 					for j = 0, modCount, 1 do
